@@ -26,6 +26,14 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
+app.get(`/api/restaurants/:keyword/:location`, (req, res, next) => {
+  const { keyword, location } = req.params;
+  if (keyword.length <= 3) {
+    throw new ClientError(400, 'keyword must be more than 3 characters');
+  }
+  res.status(200).json({ keyword, location });
+});
+
 /*
  * Handles paths that aren't handled by any other route handler.
  * It responds with `index.html` to support page refreshes with React Router.
